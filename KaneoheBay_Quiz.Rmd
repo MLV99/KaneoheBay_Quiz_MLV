@@ -1,0 +1,71 @@
+---
+title: "KaneoheBay_Quiz"
+author: "Mileisha L. Velazquez"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
+---
+
+```{r setup, include=FALSE, warning=FALSE, echo=FALSE, message=FALSE, results=FALSE, }
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(ggthemes)
+library(RColorBrewer)
+library(extrafont)
+
+
+```
+
+### Survey date with the highest mean seawater temperature
+
+Answer: The Bleached reefstatus from survey date 31-Oct-15 had the highest mean seawater  temperature, being 27.63697 with a standard deviation of 0.2733986. 
+
+## Code: 
+
+```{r, include=TRUE, echo=TRUE, warning=FALSE, message=FALSE, results=FALSE}
+
+KB=read_csv("carbonate_chem_Kaneohe.csv")
+
+KB_date= KB %>% 
+select(reefstatus, date, temp) %>% 
+group_by(reefstatus, date) %>% 
+summarise_at(vars(temp),
+list(mean=mean, 
+sd=sd)) %>% 
+as.data.frame()
+
+view(KB_date)
+```
+
+## Plot of TA vs DIC for the "bleached" survey data
+
+
+```{r, fig.dim=c(9,9),fig.cap="Figure 1. Seawater Total Alkalinity (TA) vs Seawater Dissolved Inorganic Carbon (DIC) for the Bleached Reef Status Survey Data", include=TRUE, echo=TRUE, warning=FALSE, message=FALSE, results=FALSE}
+
+KB_TA_DIC= 
+KB %>% 
+filter(reefstatus=='Bleached') %>% 
+select(reefstatus, ta, dic) 
+KB_TA_DIC
+
+KB_plot= 
+  ggplot(data=KB_TA_DIC, aes (x=dic, y=ta)) +
+geom_point((aes(color=reefstatus, shape=reefstatus)), 
+              size=5, alpha=0.7)+
+scale_color_brewer(palette = "Dark2")+
+ xlab("\n DIC (µmol/kg)")+
+  ylab("TA (µmol/kg)\n")+
+  ggtitle("Seawater Total Alkalinity (TA) vs Seawater Dissolved Inorganic Carbon (DIC) for the Bleached Reef Status Survey Data")+
+  scale_x_continuous(limits=c(1730,2029), breaks=seq(1730,2029,30))+
+  scale_y_continuous(limits=c(2018,2314), breaks=seq(2018,2314,30))+
+  theme_few()+
+  theme(legend.position="none", text=element_text(size=13,  family="Georgia"))
+  KB_plot
+  
+  Figure1= KB_plot
+```
+

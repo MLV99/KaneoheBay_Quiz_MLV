@@ -374,12 +374,20 @@ named ‘date’ and ‘time’.</p>
 <h2>2) Which survey date had the highest mean seawater temperature?
 Report mean ± standard deviation seawater temperature for each survey
 date to support your answer.</h2>
-<p>library(tidyverse) library(dplyr)</p>
-<p>KB=read_csv(“carbonate_chem_Kaneohe.csv”)</p>
-<p>KB_date= KB %&gt;% select(reefstatus, date, temp) %&gt;%
-group_by(reefstatus, date) %&gt;% summarise_at(vars(temp),
-list(mean=mean, sd=sd)) %&gt;% as.data.frame()</p>
-<p>view(KB_date)</p>
+<pre><code>library(tidyverse)
+library(dplyr)
+
+KB=read_csv(&quot;carbonate_chem_Kaneohe.csv&quot;)
+
+KB_date= KB %&gt;% 
+select(reefstatus, date, temp) %&gt;% 
+group_by(reefstatus, date) %&gt;% 
+summarise_at(vars(temp),
+list(mean=mean, 
+sd=sd)) %&gt;% 
+as.data.frame()
+
+view(KB_date)</code></pre>
 <p>Answer: The Bleached reefstatus from survey date 31-Oct-15 had the
 highest mean seawater temperature, being 27.63697 with a standard
 deviation of 0.2733986.</p>
@@ -387,18 +395,31 @@ deviation of 0.2733986.</p>
 <div id="create-a-publishable-plot-of-ta-vs-dic-for-the-bleached-survey-data." class="section level2">
 <h2>3) Create a “publishable” plot of TA vs DIC for the “bleached”
 survey data.</h2>
-<p>library(ggplot2) library(ggthemes) library(RColorBrewer)
-library(extrafont)</p>
-<p>KB_TA_DIC= KB %&gt;% filter(reefstatus==‘Bleached’) %&gt;%
-select(reefstatus, ta, dic) KB_TA_DIC</p>
-<p>KB_plot= ggplot(data=KB_TA_DIC, aes (x=dic, y=ta)) +
-geom_point((aes(color=reefstatus, shape=reefstatus)), size=5,
-alpha=0.7)+ scale_color_brewer(palette = “Dark2”)+ xlab(“DIC
-(µmol/kg)”)+ ylab(“TA (µmol/kg)”)+
-scale_x_continuous(limits=c(1730,2029), breaks=seq(1730,2029,30))+
-scale_y_continuous(limits=c(2018,2314), breaks=seq(2018,2314,30))+
-theme_few()+ theme(legend.position=“none”, text=element_text(size=15,
-family=“Georgia”)) KB_plot</p>
+<pre><code>library(ggplot2)
+library(ggthemes)
+library(RColorBrewer)
+library(extrafont)
+
+KB_TA_DIC= 
+KB %&gt;% 
+filter(reefstatus==&#39;Bleached&#39;) %&gt;% 
+select(reefstatus, ta, dic) 
+KB_TA_DIC
+
+KB_plot= ggplot(data=KB_TA_DIC, aes (x=dic, y=ta)) +
+geom_point((aes(color=reefstatus, shape=reefstatus)), 
+              size=5, alpha=0.7)+
+scale_color_brewer(palette = &quot;Dark2&quot;)+
+ xlab(&quot;\n DIC (µmol/kg)&quot;)+
+  ylab(&quot;TA (µmol/kg)\n&quot;)+
+  ggtitle(&quot;Seawater Total Alkalinity (TA) vs Seawater Dissolved Inorganic Carbon (DIC) for the Bleached Reef Status Survey Data&quot;)+
+  scale_x_continuous(limits=c(1730,2029), breaks=seq(1730,2029,30))+
+  scale_y_continuous(limits=c(2018,2314), breaks=seq(2018,2314,30))+
+  abline(lm(ta~dic,data=KB_TA_DIC),col=&#39;black&#39;)+ # regression line not functioning
+  theme_few()+
+  theme(legend.position=&quot;none&quot;, text=element_text(size=13,  family=&quot;Georgia&quot;))
+  KB_plot</code></pre>
+<pre><code>FIGURE1= KB_plot</code></pre>
 </div>
 <div id="column-names-for-the-data-in-the-attached-file" class="section level2">
 <h2>Column names for the data in the attached file</h2>
