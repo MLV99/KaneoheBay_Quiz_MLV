@@ -47,14 +47,11 @@ scale_color_brewer(palette = "Dark2")+
   ggtitle("Seawater Total Alkalinity (TA) vs Seawater Dissolved Inorganic Carbon (DIC) for the Bleached Reef Status Survey Data")+
   scale_x_continuous(limits=c(1730,2029), breaks=seq(1730,2029,30))+
   scale_y_continuous(limits=c(2018,2314), breaks=seq(2018,2314,30))+
-  abline(lm(ta~dic,data=KB_TA_DIC),col='black')+ # regression line not functioning
   theme_few()+
   theme(legend.position="none", text=element_text(size=13,  family="Georgia"))
   KB_plot
 ````
-````
-FIGURE1= KB_plot
-````
+
 
 ## Column names for the data in the attached file
 Sample ID Number = "sample"             
