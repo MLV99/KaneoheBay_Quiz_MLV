@@ -44,7 +44,7 @@ view(KB_date)
 ## Plot of TA vs DIC for the "bleached" survey data
 
 
-```{r, fig.dim=c(9,9),fig.cap="Figure 1. Seawater Total Alkalinity (TA) vs Seawater Dissolved Inorganic Carbon (DIC) for the Bleached Reef Status Survey Data", include=TRUE, echo=TRUE, warning=FALSE, message=FALSE, results=FALSE}
+```{r, fig.dim=c(15,10),fig.cap="Figure 1. Seawater Total Alkalinity (TA) vs Seawater Dissolved Inorganic Carbon (DIC) for the Bleached Reef Status Survey Data", include=TRUE, echo=TRUE, warning=FALSE, message=FALSE, results=FALSE}
 
 KB_TA_DIC= 
 KB %>% 
